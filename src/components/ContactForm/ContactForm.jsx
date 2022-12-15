@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { Button, Form } from './ContactForm.styled';
-import { ContactElement } from './ContactsElement/ContactsElement';
+//import { ContactElement } from './ContactsElement/ContactsElement';
 import { addContact } from "redux/contactsSlice";
+import { Input, Label } from 'components/Filter/Filter.styled';
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ export function ContactForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <ContactElement
-        label="Name"
+      <Label>Name</Label>
+      <Input        
         name="name"
         type="text"
         value={name}
@@ -30,8 +31,8 @@ export function ContactForm() {
         onChange={e => setName(e.target.value)}
       />
       <br />
-      <ContactElement
-        label="Number"
+      <Label>Number</Label>
+      <Input        
         name="mobile"
         type="tel"
         value={mobile}

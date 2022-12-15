@@ -33,10 +33,7 @@ const contactsInitialState = [
         state.items.splice(index, 1);
       },      
     },
-  });
-    
-  
- 
+  }); 
 
 export const { addContact, deleteContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
