@@ -26,7 +26,7 @@ export function App() {
           <>
              <Filter /> 
             <br />
-            <ContactList /> 
+             <ContactList />  
           </>
         )}
       </Section>

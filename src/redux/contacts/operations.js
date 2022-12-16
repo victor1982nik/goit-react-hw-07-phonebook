@@ -14,14 +14,3 @@ export const fetchContacts = createAsyncThunk(
   }
 )
 
-// export const fetchContacts = () => {
-//   return async dispatch => {
-//     dispatch(contactsActions.fetchContactsRequest());
-//     try {
-//       const contacts = await contactsAPI.fetchContacts();
-//       dispatch(contactsActions.fetchContactsSuccess(contacts));
-//     } catch (e) {
-//       dispatch(contactsActions.fetchContactsError(e));
-//     } 
-//   };
-// };

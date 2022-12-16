@@ -1,29 +1,20 @@
-import { combineReducers, createReducer } from "@reduxjs/toolkit";
-//import * as contactsActions from './actions';
-import {filterChange} from './actions';
+import {  createSlice } from "@reduxjs/toolkit";
 import { fetchContacts } from "./operations";
 
-const items = createReducer([], {
-    [fetchContacts.fulfilled]: (_,action) => action.payload
+const contactsSlice = createSlice({
+    name: 'contacts',
+    initialState: {items: [], isLoading: false, error: null},    
+    extraReducers: {
+        [fetchContacts.fulfilled]: (state, action) => {
+            return {...state, items: action.payload };
+        },
+        [fetchContacts.pending]: (state) => {
+            return {...state, isLoading: true};
+        },
+        [fetchContacts.rejected]: (state, action) => {
+            return {...state, error: action.payload};
+        },
+    }
 })
 
-const isLoading = createReducer(false, {
-    [fetchContacts.pending]: () => true,
-    [fetchContacts.fulfilled]: () => false,
-    [fetchContacts.rejected]: () => false,
-})
-
-const error = createReducer(null,{
-    [fetchContacts.pending]: () => null,    
-    [fetchContacts.rejected]: (_,action) => action.payload
-})
-
-const filter = createReducer("",{
-    [filterChange]: (_,action) => action.payload
-})
-export default combineReducers({
-    items,
-    isLoading,
-    error,
-    filter,
-}) 
+export const contactsReducer = contactsSlice.reducer;
