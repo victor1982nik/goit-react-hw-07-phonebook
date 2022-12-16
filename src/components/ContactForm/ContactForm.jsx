@@ -1,9 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { Button, Form } from './ContactForm.styled';
-//import { ContactElement } from './ContactsElement/ContactsElement';
-import { addContact } from "redux/contactsSlice";
 import { Input, Label } from 'components/Filter/Filter.styled';
+import * as contactsOperations from '../../redux/contacts/operations';
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ export function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault();
     const {name, mobile} = e.target.elements;    
-    dispatch(addContact({name: name.value, tel: mobile.value}));
+    dispatch(contactsOperations.addContact({name: name.value, phone: mobile.value}));
     
     setName('');
     setMobile('');
