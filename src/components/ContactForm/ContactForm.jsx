@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Form } from './ContactForm.styled';
 import { Input, Label } from 'components/Filter/Filter.styled';
 import * as contactsOperations from '../../redux/contacts/operations';
+import {toast} from 'react-hot-toast';
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -12,10 +13,11 @@ export function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault();
     const {name, mobile} = e.target.elements;    
+    toast.success("Контакт уже есть в списке");
+
     dispatch(contactsOperations.addContact({name: name.value, phone: mobile.value}));
     
-    setName('');
-    setMobile('');
+    e.target.reset();    
   };
 
   return (
