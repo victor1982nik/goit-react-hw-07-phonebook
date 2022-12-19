@@ -2,38 +2,26 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import { Section } from './Section/Section';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { selectItems, selectIsLoading } from 'redux/contacts/selectors';
-import * as contactsOperations from '../redux/contacts/operations';
+import { useGetContactsQuery } from 'redux/RTK/contactsSlice';
+import { Box } from './Box/Box';
 
 export function App() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  
-  useEffect(()=> {
-    dispatch(contactsOperations.fetchContacts())
-  },[dispatch]);
-
-  const contacts = useSelector(selectItems);
-  //console.log(contacts);
+  const { data: contacts, isLoading } = useGetContactsQuery();  
   return (
-    <div>
+    <Box bg="lightblue" display="flex" flexDirection="column" alignItems="center">
       <Section title="PhoneBook">
         <ContactForm />
       </Section>
       <Section title="Contacts">
-      {isLoading &&  <b>Request in progress...</b>} 
+        {isLoading && <b>Request in progress...</b>}
         {contacts?.length > 0 && (
           <>
-             <Filter /> 
-            <br />
-              <ContactList />   
+            <Filter />
+            
+            <ContactList />
           </>
         )}
       </Section>
-    </div>
+    </Box>
   );
 }
-
-

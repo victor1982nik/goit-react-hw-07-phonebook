@@ -1,27 +1,38 @@
-import { useDispatch, useSelector} from 'react-redux';
+import {
+  useGetContactsQuery,
+  useDeleteContactMutation,
+} from 'redux/RTK/contactsSlice';
 import { Button } from 'components/ContactForm/ContactForm.styled';
-import { List } from './ContactsList.styled';
+import { Img, List } from './ContactsList.styled';
+import { useSelector } from 'react-redux';
 import * as contactsSelectors from 'redux/contacts/selectors';
-import { deleteContact } from 'redux/contacts/operations';
+import { Box } from 'components/Box/Box';
 
 export function ContactList() {
-  const dispatch = useDispatch();
-  
-  const filteredContacts = useSelector(contactsSelectors.selectFilteredContacts);
-  
+  const [deleteContact] = useDeleteContactMutation();
+  const { data: contacts } = useGetContactsQuery();
+  const filter = useSelector(contactsSelectors.selectFilter);
+
+  const normalizedFilter = filter.toLowerCase();
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedFilter)
+  );
+
   return (
-    <ul>
-      {filteredContacts.map((contact, index) => (
-        <List key={contact.id}>
-          {contact.name} {contact.phone}{' '}
-          <Button
-            type="button"
-            onClick={() => dispatch(deleteContact(contact.id))}
-          >
-            Delete
-          </Button>
-        </List>
-      ))}
-    </ul>
+    <Box border="1px solid black" p={2} borderRadius="8px">
+      <Box as="ul" >
+        {filteredContacts.map((contact, index) => (
+          <Box  mb={1} width="100%" >
+            <List key={contact.id}>
+              <Img src={contact.avatart} alt="contactPhoto"  />
+              <p>{contact.name} {contact.phone}{' '}</p>
+              <Button type="button" onClick={() => deleteContact(contact.id)}>
+                Delete
+              </Button>
+            </List>
+          </Box>
+        ))}
+      </Box>
+    </Box>
   );
 }
